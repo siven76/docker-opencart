@@ -30,3 +30,8 @@ rm -rf compose .git
 4. Start you docker containers with: `bin/start`.
 
 5. Go to `http://opencart3.test` in your browser, to start OpenCart 3 installation wizard.
+
+## OpenCart 3 Installation
+
+* The Database credentials can be found and changed in the file `env/db.env`.
+* In the Installation wizard, use `db` as the hostname for the database.
