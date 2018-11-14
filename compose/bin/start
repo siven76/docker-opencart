@@ -1,2 +1,24 @@
 #!/bin/bash
+
+FILE="env/db.env"
+
+if [ -f "$FILE" ]
+then
+	echo "Starting up docker as deamon"
+
+else
+	echo "Generating db.env file.."
+
+    DOMAIN=${PWD##*/}
+	DB=$(echo $DOMAIN | cut -f1 -d.)
+	printf 'MYSQL_ROOT_PASSWORD=%s\nMYSQL_DATABASE=%s\nMYSQL_USER=%s\nMYSQL_PASSWORD=%s' "opencart" "$DB" "$DB" "$DB" > "$FILE"
+
+	echo "Adding domain to /etc/hosts.."
+	LINE="127.0.0.1	$DOMAIN"
+	HOSTS="/etc/hosts"
+	grep -qF -- "$LINE" "$HOSTS" || echo "$LINE" | sudo tee -a "$HOSTS"
+	
+	echo "Starting up docker as deamon"
+fi
+
 docker-compose up -d
